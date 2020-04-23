@@ -4,7 +4,7 @@ public class Reimbursement {
 
 	private int rId;
 	private int amount;
-	private String decsription;
+	private String description;
 	private int requesterId; 
 	private String status;
 	
@@ -12,11 +12,11 @@ public class Reimbursement {
 		super();
 	}
 
-	public Reimbursement(int rId, int amount, String decsription, int requesterId, String status) {
+	public Reimbursement(int rId, int amount, String description, int requesterId, String status) {
 		super();
 		this.rId = rId;
 		this.amount = amount;
-		this.decsription = decsription;
+		this.description = description;
 		this.requesterId = requesterId;
 		this.status = status;
 	}
@@ -37,12 +37,12 @@ public class Reimbursement {
 		this.amount = amount;
 	}
 
-	public String getDecsription() {
-		return decsription;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDecsription(String decsription) {
-		this.decsription = decsription;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public int getRequesterId() {
@@ -63,7 +63,7 @@ public class Reimbursement {
 
 	@Override
 	public String toString() {
-		return "Reimbursement [rId=" + rId + ", amount=" + amount + ", decsription=" + decsription + ", requesterId="
+		return "Reimbursement [rId=" + rId + ", decsription=" + description + ", amount=" + amount + ", requesterId="
 				+ requesterId + ", status=" + status + "]";
 	}
 

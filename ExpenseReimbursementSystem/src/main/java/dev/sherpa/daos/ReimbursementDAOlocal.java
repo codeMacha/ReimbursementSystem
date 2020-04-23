@@ -22,7 +22,6 @@ public class ReimbursementDAOlocal implements ReimbursementDAO{
 
 	@Override
 	public Reimbursement getReimbursementById(int id) {
-		
 		return reimbursement_table.get(id);
 	}
 
@@ -34,20 +33,28 @@ public class ReimbursementDAOlocal implements ReimbursementDAO{
 
 	@Override
 	public List<Reimbursement> getAllReimbursementbyStatus(String status) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Reimbursement> rlist =  getAllReimbursement();
+		List<Reimbursement> statuslist = new ArrayList<Reimbursement>();
+		for(int i = 0; i < rlist.size(); i++) {
+			if (rlist.get(i).getStatus() == status) {
+				statuslist.add(rlist.get(i));
+			}
+		}
+		return statuslist;	
 	}
 
 	@Override
 	public Reimbursement updateReimbursement(Reimbursement reimbursement) {
-		// TODO Auto-generated method stub
-		return null;
+		reimbursement_table.put(reimbursement.getrId(), reimbursement);
+		return reimbursement;
 	}
 
 	@Override
 	public boolean removeReimbursement(Reimbursement reimbursement) {
-		// TODO Auto-generated method stub
-		return false;
+		reimbursement_table.remove(reimbursement.getrId());
+		return true;
 	}
+
+	
 
 }

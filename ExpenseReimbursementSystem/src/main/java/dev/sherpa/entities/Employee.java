@@ -6,6 +6,7 @@ public class Employee {
 	private String name;
 	private String username;
 	private String password;
+	private int managerId;
 	
 	public Employee() {
 		super();
@@ -50,10 +51,18 @@ public class Employee {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public int getManagerId() {
+		return managerId;
+	}
+
+	public void setManagerId(int id) {
+		this.managerId = id;
+	}
 
 	@Override
 	public String toString() {
-		return "Employee [eId=" + eId + ", username=" + username + ", password=" + password + "]";
+		return "Employee [eId=" + eId + ", name=" + name + ", username=" + username + ", password=" + password + ", managerId="+ managerId + "]";
 	}
 
 }
