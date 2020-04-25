@@ -48,4 +48,15 @@ public class EmployeeDAOlocal implements EmployeeDAO{
 		return true;
 	}
 
+	@Override
+	public Employee getEmployeeByuandpname(String uname, String pword) {
+		return null;
+	}
+
+	@Override
+	public boolean checkUsernamePassword(String uname, String pword) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

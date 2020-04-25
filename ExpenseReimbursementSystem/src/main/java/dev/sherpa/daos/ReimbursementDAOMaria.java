@@ -92,11 +92,12 @@ public class ReimbursementDAOMaria implements ReimbursementDAO {
 	@Override
 	public List<Reimbursement> getAllReimbursementbyStatus(String status) {
 		try(Connection conn = ConnectionUtil.createConnection()){
-			String sql = "SELECT * FROM Reimbursementdb.REIMBURSEMENT WHERE STATUS = ? ";
+			String sql = "SELECT * FROM Reimbursementdb.REIMBURSEMENT WHERE STATUS = ? AND EMPLOYEE_ID = ?";
 			List<Reimbursement> reimbursementList = new ArrayList<Reimbursement>();
 			
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, status);
+	
 			ResultSet rs =  ps.executeQuery();
 			
 			while(rs.next()) {
@@ -151,6 +152,33 @@ public class ReimbursementDAOMaria implements ReimbursementDAO {
 			e.printStackTrace();
 			return false;
 		}	
+	}
+
+	@Override
+	public List<Reimbursement> getReimbursementbyemployeeId(int id) {
+		try(Connection conn = ConnectionUtil.createConnection()){
+			String sql = "SELECT * FROM Reimbursementdb.REIMBURSEMENT WHERE EMPLOYEE_ID = ? ";
+			List<Reimbursement> reimbursementList = new ArrayList<Reimbursement>();
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+			ResultSet rs =  ps.executeQuery();
+			
+			while(rs.next()) {
+				Reimbursement t = new Reimbursement();
+				t.setrId(rs.getInt("REIMBURSEMENT_ID"));
+				t.setDescription(rs.getString("DESCRIPTION"));
+				t.setAmount(rs.getInt("AMOUNT"));
+				t.setRequesterId(rs.getInt("EMPLOYEE_ID"));
+				t.setStatus(rs.getString("STATUS"));
+				reimbursementList.add(t);
+			}
+			return reimbursementList;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

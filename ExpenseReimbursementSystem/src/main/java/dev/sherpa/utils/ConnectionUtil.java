@@ -16,8 +16,11 @@ public class ConnectionUtil {
 			//create a properties object to store information
 			Properties props = new Properties();
 			
+			Class.forName("org.mariadb.jdbc.Driver");
+
+			
 			// use file io to read in a file
-			FileInputStream in = new FileInputStream("src/main/resources/connection.properties");
+			FileInputStream in = new FileInputStream(ConnectionUtil.class.getClassLoader().getResource("connection.properties").getFile());
 			// populate the properties object by loading in the fileinputstream 
 			props.load(in);
 			
@@ -32,6 +35,10 @@ public class ConnectionUtil {
 			e.printStackTrace();
 			return null;
 		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
