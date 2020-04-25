@@ -11,6 +11,7 @@ public interface EmployeeDAO {
 	
 	// read
 	Employee getEmployeeById(int id);
+	Employee getEmployeeByuandpname(String uname, String pword);
 	List<Employee> getAllEmployee();
 	
 	// update
@@ -18,4 +19,6 @@ public interface EmployeeDAO {
 	
 	// delete
 	boolean removeEmployee(Employee employee);
+
+	boolean checkUsernamePassword(String uname, String pword);
 }

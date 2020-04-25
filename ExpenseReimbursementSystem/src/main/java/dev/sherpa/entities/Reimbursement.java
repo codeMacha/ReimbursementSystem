@@ -10,6 +10,7 @@ public class Reimbursement {
 	
 	public Reimbursement() {
 		super();
+		this.status = "Submitted";
 	}
 
 	public Reimbursement(int rId, int amount, String description, int requesterId, String status) {

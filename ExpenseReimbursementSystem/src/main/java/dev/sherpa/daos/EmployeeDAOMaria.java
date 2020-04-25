@@ -122,6 +122,60 @@ public class EmployeeDAOMaria implements EmployeeDAO {
 		return false;
 	}
 
+	@Override
+	public Employee getEmployeeByuandpname(String uname, String pword) {
+		try(Connection conn = ConnectionUtil.createConnection()){
+			String sql = "SELECT * FROM Reimbursementdb.EMPLOYEE WHERE USERNAME = ? AND PASSWORD = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, uname);
+			ps.setString(2, pword);
+			
+			// result set contains our information
+			// by default result points to before the first record returned
+			ResultSet rs = ps.executeQuery();
+			
+			// moves cursor one spot to first record
+			rs.next();
+			
+			Employee employee = new Employee();
+			
+			employee.seteId(rs.getInt("EMPLOYEE_ID"));
+			employee.setName(rs.getString("NAME"));
+			employee.setUsername(rs.getString("USERNAME"));
+			employee.setPassword(rs.getString("PASSWORD"));
+			employee.setManagerId(rs.getInt("MANAGER_ID"));
+			
+			return employee;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public boolean checkUsernamePassword(String uname, String pword) {
+		try(Connection conn = ConnectionUtil.createConnection()){
+			String sql = "SELECT * FROM Reimbursementdb.EMPLOYEE WHERE USERNAME = ? AND PASSWORD = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, uname);
+			ps.setString(2, pword);
+			
+			// result set contains our information
+			// by default result points to before the first record returned
+			ResultSet rs = ps.executeQuery();
+			
+			// moves cursor one spot to first record
+			if(rs.next()) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+
 
 
 }

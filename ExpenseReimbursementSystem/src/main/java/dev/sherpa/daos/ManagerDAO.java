@@ -9,7 +9,7 @@ public interface ManagerDAO {
 	
 	// read
 	Manager getManagerbyId(int id);
-	
+	boolean getManagerbyUp(String uname, String pword);
 	// update
 	Manager updateManager(Manager manager);
 	

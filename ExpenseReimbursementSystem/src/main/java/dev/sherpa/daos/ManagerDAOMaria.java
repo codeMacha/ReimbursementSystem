@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import dev.sherpa.entities.Employee;
 import dev.sherpa.entities.Manager;
 import dev.sherpa.utils.ConnectionUtil;
 
@@ -94,6 +95,54 @@ public class ManagerDAOMaria implements ManagerDAO{
 			ps.execute();
 			return true;
 			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public boolean getManagerbyUp(String uname, String pword) {
+		try(Connection conn = ConnectionUtil.createConnection()){
+			String sql = "SELECT * FROM Reimbursementdb.MANAGER WHERE USERNAME = ? AND PASSWORD = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, uname);
+			ps.setString(2, pword);
+			
+			// result set contains our information
+			// by default result points to before the first record returned
+			ResultSet rs = ps.executeQuery();
+			
+			// moves cursor one spot to first record
+			if(rs.next()) {
+				return true;
+			} else {
+				return false;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean checkUsernamePassword(String uname, String pword) {
+		try(Connection conn = ConnectionUtil.createConnection()){
+			String sql = "SELECT * FROM Reimbursementdb.MANAGER WHERE USERNAME = ? AND PASSWORD = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, uname);
+			ps.setString(2, pword);
+			
+			// result set contains our information
+			// by default result points to before the first record returned
+			ResultSet rs = ps.executeQuery();
+			
+			// moves cursor one spot to first record
+			if(rs.next()) {
+				return true;
+			} else {
+				return false;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;

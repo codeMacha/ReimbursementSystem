@@ -11,6 +11,7 @@ public interface ReimbursementDAO {
 	
 	//READ
 	Reimbursement getReimbursementById(int id);
+	List<Reimbursement> getReimbursementbyemployeeId(int id);
 	List<Reimbursement> getAllReimbursement();
 	List<Reimbursement> getAllReimbursementbyStatus(String status);
 	
@@ -19,6 +20,8 @@ public interface ReimbursementDAO {
 	
 	//DELETE
 	boolean removeReimbursement(Reimbursement reimbursement);
+
+	
 	
 	
 	

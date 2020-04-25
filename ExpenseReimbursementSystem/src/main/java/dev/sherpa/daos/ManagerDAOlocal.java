@@ -36,4 +36,9 @@ public class ManagerDAOlocal implements ManagerDAO{
 		return false;
 	}
 
+	@Override
+	public boolean getManagerbyUp(String uname, String pword) {
+		return true;
+	}
+
 }
