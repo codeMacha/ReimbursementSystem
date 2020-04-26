@@ -21,7 +21,15 @@ public class ReimbursementController {
 		Gson gson = new Gson();
 		List<Reimbursement> reimbursementlist = rserv.retrieveAllReimbursement();
 		PrintWriter pw = response.getWriter();
-		
+		String json = gson.toJson(reimbursementlist);
+		pw.append(json);
+	}
+	
+	public void getAllReimbursementByempId(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		Gson gson = new Gson();
+		int empid = (int)request.getSession().getAttribute("uid");
+		List<Reimbursement> reimbursementlist = rserv.retrieveUserReimbursement(empid);
+		PrintWriter pw = response.getWriter();
 		String json = gson.toJson(reimbursementlist);
 		pw.append(json);
 	}
@@ -30,6 +38,8 @@ public class ReimbursementController {
 		String body = request.getReader().lines().reduce("", (accumulator,actual) -> accumulator+actual);
 		Gson gson = new Gson();
 		Reimbursement t = gson.fromJson(body, Reimbursement.class);
+		int empid = (int)request.getSession().getAttribute("uid");
+		t.setRequesterId(empid);
 		rserv.createReimbursement(t);
 		response.getWriter().append("Success!");
 	}
@@ -39,34 +49,15 @@ public class ReimbursementController {
 		String json = gson.toJson(rserv.retrieveSubmittedReimbursement());
 		response.getWriter().append(json);
 	}
-	
-	public void approvedReimbursements(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		Gson gson = new Gson();
-		String json = gson.toJson(rserv.retrieveApprovedReimbursement());
-		response.getWriter().append(json);
-	}
-	
-	public void rejectedReimbursements(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		Gson gson = new Gson();
-		String json = gson.toJson(rserv.retrieveRejectedReimbursement());
-		response.getWriter().append(json);
-	}
-	
-	public void approveReimbursement(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+	public void changeReimbursement(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		Gson gson = new Gson();
 		String json = request.getReader().lines().reduce("", (accumulator,actual) -> accumulator+actual);
 		Reimbursement reimbursement = gson.fromJson(json, Reimbursement.class);
-		rserv.approveReimbursement(reimbursement);		
+		rserv.updateReimbursement(reimbursement);		
 		response.getWriter().append("Successfully updated");
 	}
 	
-	public void rejectReimbursement(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		Gson gson = new Gson();
-		String json = request.getReader().lines().reduce("", (accumulator,actual) -> accumulator+actual);
-		Reimbursement reimbursement = gson.fromJson(json, Reimbursement.class);
-		rserv.rejectReimbursement(reimbursement);		
-		response.getWriter().append("Successfully updated");
-	}
 
 	
 }

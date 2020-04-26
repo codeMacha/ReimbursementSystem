@@ -44,9 +44,8 @@ public class ReimbursementDAOlocal implements ReimbursementDAO{
 	}
 
 	@Override
-	public Reimbursement updateReimbursement(Reimbursement reimbursement) {
+	public void updateReimbursement(Reimbursement reimbursement) {
 		reimbursement_table.put(reimbursement.getrId(), reimbursement);
-		return reimbursement;
 	}
 
 	@Override
@@ -57,8 +56,14 @@ public class ReimbursementDAOlocal implements ReimbursementDAO{
 
 	@Override
 	public List<Reimbursement> getReimbursementbyemployeeId(int id) {
-
-		return null;
+		List<Reimbursement> rlist =  getAllReimbursement();
+		List<Reimbursement> nlist = new ArrayList<Reimbursement>();
+		for(int i = 0; i < rlist.size(); i++) {
+			if (rlist.get(i).getRequesterId()== id) {
+				nlist.add(rlist.get(i));
+			}
+		}
+		return nlist;	
 	}
 
 	

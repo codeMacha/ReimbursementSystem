@@ -1,0 +1,86 @@
+@charset "ISO-8859-1";
+
+body {
+	background-image: url("background.jpg");
+	background-size: cover;
+}
+
+h1  {
+	color: maroon;
+	font-family: 'fantasy';
+	font-size: 65px;
+	text-transform: uppercase;
+	font-weight: normal;
+	line-height: 60px;
+	margin: 10px 0 20px;
+	text-transform: uppercase;
+	text-shadow: 2px 2px 0 #000;
+	margin: 10px 0 24px;
+	text-align: center;
+}
+
+h2 { 
+font-size: 30px; 
+letter-spacing: -1px; 
+color: brown;
+text-transform: uppercase; 
+text-shadow: 1px 1px 0 #000;
+margin: 10px 0 24px; 
+text-align: center; 
+line-height: 50px;
+font-family: fantasy;
+}
+
+h3 {
+	color: coral;
+}
+
+p { 
+color: #f6f6f6; 
+font-family: 'Orienta', sans-serif; 
+font-size: 16px; 
+line-height: 24px; 
+margin: 0 0 24px; 
+text-align: center; 
+}
+
+
+a { 
+color: #e8d4a7; 
+text-decoration: none; 
+text-align: right; 
+padding: 15px; 
+font-size: 20px; 
+}
+
+a:hover { 
+color: #da9650; 
+text-decoration: blink; 
+}
+
+table {
+	color: coral;
+}
+
+#reimbursementTable {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#reimbursementTable td, #reimbursementTable th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#reimbursementTable tr:nth-child(even){background-color:firebrick;}
+
+#reimbursmentTable tr:hover {background-color: khaki ;}
+
+#reimbursementTable th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: saddlebrown;
+  color: burlywood;
+}

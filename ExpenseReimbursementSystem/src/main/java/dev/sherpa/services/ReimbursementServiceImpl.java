@@ -17,17 +17,8 @@ public class ReimbursementServiceImpl implements ReimbursementService{
 	}
 
 	@Override
-	public Reimbursement approveReimbursement(Reimbursement reimbursement) {
-		reimbursement.setStatus("Approved");
+	public void updateReimbursement(Reimbursement reimbursement) {
 		rdao.updateReimbursement(reimbursement);
-		return reimbursement;
-	}
-
-	@Override
-	public Reimbursement rejectReimbursement(Reimbursement reimbursement) {
-		reimbursement.setStatus("Rejected");
-		rdao.updateReimbursement(reimbursement);
-		return reimbursement;
 	}
 
 	@Override

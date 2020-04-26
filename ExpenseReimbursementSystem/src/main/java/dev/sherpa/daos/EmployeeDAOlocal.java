@@ -49,7 +49,7 @@ public class EmployeeDAOlocal implements EmployeeDAO{
 	}
 
 	@Override
-	public Employee getEmployeeByuandpname(String uname, String pword) {
+	public Employee getEmployeeByuandpname(String uname) {
 		return null;
 	}
 

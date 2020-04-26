@@ -35,12 +35,17 @@ public class EmployeeLogin extends HttpServlet {
 		String uname = request.getParameter("username");
 		String pword = request.getParameter("password");
 		
-		Employee employee = eserv.getEmployeeByUp(uname, pword);
+		response.getWriter().append(uname);
 		
-		if(employee.geteId() != 0) {
+		if(eserv.check(uname, pword)) {
+			
+			Employee employee = eserv.getEmployeeByUp(uname);
+			int eid = employee.geteId();	
 			HttpSession session = request.getSession();
 			session.setAttribute("username", uname);
-			response.sendRedirect("eWelcome.jsp");
+			session.setAttribute("uid", eid);
+			
+			response.sendRedirect("eWelcome.html");
 			
 		} else {
 			response.sendRedirect("index.html");

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="clean.css">
+<title>Insert title here</title>
+</head>
+<body>
+
+<h3>Reimbursements</h3>
+	<button id="allBtn">Get All Reimbursements</button>
+	<button id="submittedBtn">Get Pending Reimbursements</button>
+	<button id="approvedBtn">Get Approved Reimbursements</button>
+	<button id="rejectedBtn">Get Rejected Reimbursements</button>
+	
+	
+	<table id="reimbursementTable" >
+	    <thead><tr><th>Description</th><th>Amount</th><th>Employee_id</th><th>Status</th></tr></thead>
+	</table>
+
+
+<form action="Logout">
+	<input type="submit" value="logout">
+</form>
+
+</body>
+<script>
+	document.getElementById("allBtn").addEventListener("click",getAllReimbursements);
+	document.getElementById("submittedBtn").addEventListener("click",getSubmittedReimbursements);
+	document.getElementById("approvedBtn").addEventListener("click",getApprovedReimbursements);
+	document.getElementById("rejectedBtn").addEventListener("click",getRejectedReimbursements);
+
+	async function getAllReimbursements(){
+
+        let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementSystem/api/reimbursements");
+        let reimbursements = await httpResponse.json();
+        let tableData = document.getElementById("reimbursementTable");
+
+        for(reimbursement of reimbursements){
+            tableData.innerHTML = tableData.innerHTML + `<tr> <td> ${reimbursement.description} </td>
+            <td> ${reimbursement.amount} </td>  <td> ${reimbursement.requesterId} </td> <td> ${reimbursement.status}</td> </tr>`;
+            
+        }    
+    }
+	
+	async function getApprovedReimbursements(){
+
+        let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementSystem/api/reimbursements");
+        let tasks = await httpResponse.json();
+        let tableData = document.getElementById("reimbursementTable");
+
+        for(task of tasks){
+        	if(task.status == "approved"){
+	            tableData.innerHTML = tableData.innerHTML + `<tr><td> ${task.description} </td>
+	            <td> ${task.amount} </td>  <td> ${task.requesterId} </td> <td> ${task.status}</td> </tr>`;
+        	}    
+        }    
+    }
+	
+	async function getRejectedReimbursements(){
+
+        let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementSystem/api/reimbursements");
+        let tasks = await httpResponse.json();
+        let tableData = document.getElementById("reimbursementTable");
+
+        for(task of tasks){
+        	if(task.status == "rejected"){
+	            tableData.innerHTML = tableData.innerHTML + `<tr> <td> ${task.description} </td>
+	            <td> ${task.amount} </td>  <td> ${task.requesterId} </td> <td> ${task.status}</td> </tr>`;
+        	}    
+        }    
+    }
+	
+	async function getSubmittedReimbursements(){
+
+        let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementSystem/api/reimbursements");
+        let reimbursements = await httpResponse.json();
+        let tableData = document.getElementById("reimbursementTable");
+
+        for(reimbursement of reimbursements){
+        	if(reimbursement.status == "submitted"){
+				tableData.innerHTML = tableData.innerHTML + `<tr>
+				<td> ${reimbursement.description} </td> <td> ${reimbursement.amount} </td> <td> ${reimbursement.requesterId} </td> 
+				<td> ${reimbursement.status}</td>
+				<td><button rId=${reimbursement.rId}
+				description=${reimbursement.description}
+				amount=${reimbursement.amount}
+				status=${reimbursement.status}
+				reqId=${reimbursement.requesterId} onclick="approve(this)"> Approve </button>
+				<button rid=${reimbursement.rId}
+				description=${reimbursement.description}
+				amount=${reimbursement.amount}
+				status=${reimbursement.status}
+				reqId=${reimbursement.requesterId} onclick="reject(this)"> Reject </button>
+				</td></tr>`;
+        	}
+        }    
+    }
+	
+	async function approve(element){
+	    
+	    let reimbursement = {};
+	    reimbursement.rId = element.getAttribute("rId");
+	    reimbursement.description = element.getAttribute("description");
+	    reimbursement.status = "approved";
+		reimbursement.amount = Number.parseInt(element.getAttribute("amount"));
+		reimbursement.requesterId = element.getAttribute("reqId");
+	    let settings = {
+	        method:'POST',
+	        headers:{'Content-Type':'application/json'},
+	        body: JSON.stringify(reimbursement)
+	    }
+	
+	    let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementSystem/api/update", settings); 
+	    console.log(httpResponse)
+	}
+
+	async function reject(element){
+	    
+	    let reimbursement = {};
+	    reimbursement.rId = element.getAttribute("rId");
+	    reimbursement.description = element.getAttribute("description");
+	    reimbursement.status = "rejected";
+		reimbursement.amount = Number.parseInt(element.getAttribute("amount"));
+		reimbursement.requesterId = element.getAttribute("reqId");
+	    console.log(element)
+	    let settings = {
+	        method:'POST',
+	        headers:{'Content-Type':'application/json'},
+	        body: JSON.stringify(reimbursement)
+	    }
+	
+	    let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementSystem/api/update", settings); 
+	
+	    console.log(httpResponse)
+	
+	}
+
+</script>
+
+</html>

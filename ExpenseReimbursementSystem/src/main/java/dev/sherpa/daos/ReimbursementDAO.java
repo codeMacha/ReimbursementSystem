@@ -16,7 +16,7 @@ public interface ReimbursementDAO {
 	List<Reimbursement> getAllReimbursementbyStatus(String status);
 	
 	//UPDATE
-	Reimbursement updateReimbursement(Reimbursement reimbursement);
+	void updateReimbursement(Reimbursement reimbursement);
 	
 	//DELETE
 	boolean removeReimbursement(Reimbursement reimbursement);

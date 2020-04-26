@@ -7,8 +7,8 @@ import dev.sherpa.entities.Reimbursement;
 public interface ReimbursementService {
 
 	Reimbursement createReimbursement(Reimbursement reimbursement);
-	Reimbursement approveReimbursement(Reimbursement reimbursement);
-	Reimbursement rejectReimbursement(Reimbursement reimbursement);
+	void updateReimbursement(Reimbursement reimbursement);
+	
 	Reimbursement getReimbursemnetById(int id);
 	
 	List<Reimbursement> retrieveAllReimbursement();

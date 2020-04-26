@@ -11,7 +11,7 @@ public interface EmployeeDAO {
 	
 	// read
 	Employee getEmployeeById(int id);
-	Employee getEmployeeByuandpname(String uname, String pword);
+	Employee getEmployeeByuandpname(String uname);
 	List<Employee> getAllEmployee();
 	
 	// update
