@@ -123,12 +123,11 @@ public class EmployeeDAOMaria implements EmployeeDAO {
 	}
 
 	@Override
-	public Employee getEmployeeByuandpname(String uname, String pword) {
+	public Employee getEmployeeByuandpname(String uname) {
 		try(Connection conn = ConnectionUtil.createConnection()){
-			String sql = "SELECT * FROM Reimbursementdb.EMPLOYEE WHERE USERNAME = ? AND PASSWORD = ?";
+			String sql = "SELECT * FROM Reimbursementdb.EMPLOYEE WHERE USERNAME = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, uname);
-			ps.setString(2, pword);
 			
 			// result set contains our information
 			// by default result points to before the first record returned

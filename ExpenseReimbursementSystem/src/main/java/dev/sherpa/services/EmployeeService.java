@@ -6,9 +6,10 @@ import dev.sherpa.entities.Employee;
 
 public interface EmployeeService {
 	
-	Employee getEmployeeByUp(String uname, String pword);
+	Employee getEmployeeByUp(String uname);
 	
 	List<Employee> getAllEmployee();
 	
 	public boolean check(String uname, String pword);
+	
 }

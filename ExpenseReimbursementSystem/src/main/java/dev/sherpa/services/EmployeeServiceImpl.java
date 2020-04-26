@@ -11,8 +11,8 @@ public class EmployeeServiceImpl implements EmployeeService{
 	private EmployeeDAO edao = new EmployeeDAOMaria();
 
 	@Override
-	public Employee getEmployeeByUp(String uname, String pword) {
-		return edao.getEmployeeByuandpname(uname, pword);
+	public Employee getEmployeeByUp(String uname) {
+		return edao.getEmployeeByuandpname(uname);
 	}
 
 	@Override

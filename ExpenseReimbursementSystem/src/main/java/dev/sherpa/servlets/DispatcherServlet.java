@@ -6,9 +6,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class DispatcherServlet
- */
+import dev.sherpa.controller.ReimbursementController;
+
 public class DispatcherServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -20,12 +19,28 @@ public class DispatcherServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
+    ReimbursementController rcontroller = new ReimbursementController();
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		String uri = request.getRequestURI();
+		System.out.println(uri);
+		
+		switch(uri) {
+		
+		case "/ExpenseReimbursementSystem/api/reimbursements" : rcontroller.getAllReimbursement(request, response); break;
+		case "/ExpenseReimbursementSystem/api/emplreimbursements" : rcontroller.getAllReimbursementByempId(request, response); break;
+		case "/ExpenseReimbursementSystem/api/addreimbursement" : rcontroller.addReimbursement(request, response); break;
+		case "/ExpenseReimbursementSystem/api/submitteddreimbursements" : rcontroller.submittedReimbursements(request, response); break;
+		case "/ExpenseReimbursementSystem/api/update" : rcontroller.changeReimbursement(request, response);; break;
+
+		
+		default : response.getWriter().append("your request uri did not match anything");break;
+		
+		}
+		
 	}
 
 	/**

@@ -1,6 +1,8 @@
 package dev.sherpa.servlets;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -40,7 +42,7 @@ public class ManagerLogin extends HttpServlet {
 		if(res) {
 			HttpSession session = request.getSession();
 			session.setAttribute("username", uname);
-			response.sendRedirect("mWelcome.jsp");
+			response.sendRedirect("mWelcome.html");
 			
 		} else {
 			response.sendRedirect("index.html");

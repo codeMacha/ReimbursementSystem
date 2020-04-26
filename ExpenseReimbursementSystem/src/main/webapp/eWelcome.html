@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="clean.css">
+<title>try page</title>
+</head>
+<body>
+	<h2 id="welcome"></h2>
+
+	<h3>Task</h3>
+	<input id="descInput" type="text" placeholder="Description">
+	<input id="amount" type="number" placeholder="0.00">
+	<button id="addReimbursementBtn">Add Reimbursement</button>
+	
+	<h3>Your Submitted Reimbursements</h3>
+	<button id="allBtn">Get All Reimbursements</button>
+	<button id="approvedBtn">Get Approved Reimbursements</button>
+	<button id="rejectedBtn">Get Rejected Reimbursements</button>
+	
+	<table id="reimbursementTable">
+	    <thead><tr><th>Id</th><th>Description</th><th>Amount</th><th>Employee_id</th><th>Status</th></tr></thead>
+	</table>
+	
+	<form action="Logout">
+		<input type="submit" value="logout">
+	</form>
+
+</body>
+
+<script>
+
+	document.getElementById("allBtn").addEventListener("click",getAllReimbursements);
+	document.getElementById("approvedBtn").addEventListener("click",getApprovedReimbursements);
+	document.getElementById("rejectedBtn").addEventListener("click",getRejectedReimbursements);
+	document.getElementById("addReimbursementBtn").addEventListener("click",addReimbursement);
+
+	async function getAllReimbursements(){
+
+        let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementSystem/api/emplreimbursements");
+        let tasks = await httpResponse.json();
+        let tableData = document.getElementById("reimbursementTable");
+
+        for(task of tasks){
+            tableData.innerHTML = tableData.innerHTML + `<tr><td> ${task.rId} </td> <td> ${task.description} </td>
+            <td> ${task.amount} </td>  <td> ${task.requesterId} </td> <td> ${task.status}</td> </tr>`;   
+        }    
+    }
+	
+	async function getApprovedReimbursements(){
+
+        let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementSystem/api/emplreimbursements");
+        let tasks = await httpResponse.json();
+        let tableData = document.getElementById("reimbursementTable");
+
+        for(task of tasks){
+        	if(task.status == "approved"){
+	            tableData.innerHTML = tableData.innerHTML + `<tr><td> ${task.rId} </td> <td> ${task.description} </td>
+	            <td> ${task.amount} </td>  <td> ${task.requesterId} </td> <td> ${task.status}</td> </tr>`;
+        	}    
+        }    
+    }
+	
+	async function getRejectedReimbursements(){
+
+        let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementSystem/api/emplreimbursements");
+        let tasks = await httpResponse.json();
+        let tableData = document.getElementById("reimbursementTable");
+
+        for(task of tasks){
+        	if(task.status == "rejected"){
+	            tableData.innerHTML = tableData.innerHTML + `<tr><td> ${task.rId} </td> <td> ${task.description} </td>
+	            <td> ${task.amount} </td>  <td> ${task.requesterId} </td> <td> ${task.status}</td> </tr>`;
+        	}
+        }    
+    }
+
+	async function addReimbursement(){
+	    
+	    let reimbursement = {
+	        rId:0,
+	        status:"submitted"
+	    }
+	    // appending the properties to the object after it is created
+	    reimbursement.description = document.getElementById("descInput").value;
+	    reimbursement.amount = Number.parseInt(document.getElementById("amount").value);
+	
+	    let settings = {
+	        method:'POST',
+	        headers:{'Content-Type':'application/json'},
+	        body: JSON.stringify(reimbursement)
+	    }
+	
+	    let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementSystem/api/addreimbursement", settings); 
+	    console.log(httpResponse)
+	}
+
+
+</script>
+</html>

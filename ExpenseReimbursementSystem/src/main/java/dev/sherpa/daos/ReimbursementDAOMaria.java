@@ -118,7 +118,7 @@ public class ReimbursementDAOMaria implements ReimbursementDAO {
 	}
 
 	@Override
-	public Reimbursement updateReimbursement(Reimbursement reimbursement) {
+	public void updateReimbursement(Reimbursement reimbursement) {
 		try(Connection conn = ConnectionUtil.createConnection()){
 			String sql = "UPDATE Reimbursementdb.REIMBURSEMENT SET DESCRIPTION = ?, AMOUNT = ?, EMPLOYEE_ID = ?, STATUS = ? WHERE REIMBURSEMENT_ID = ? ";
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -130,10 +130,8 @@ public class ReimbursementDAOMaria implements ReimbursementDAO {
 			ps.setInt(5, reimbursement.getrId());
 			ps.execute();
 			
-			return reimbursement;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
 		}		
 	}
 
