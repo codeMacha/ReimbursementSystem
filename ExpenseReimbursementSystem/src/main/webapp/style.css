@@ -6,9 +6,24 @@
 	        box-sizing: border-box;
 	outline: none;
 }
+.wrapper{
+	text-align:center;
+	position:absolute;
+	top:40%;
+	bottom:40%;
+	left:30%;
+	right:30%;
+}
 
+.btn btn-danger {
+	position: static;
+	
+}
 body {
-	background: #333 !important;
+	background-image: url('finallogin.jpg');
+	background-repeat: no-repeat;
+	background-attachment:fixed;
+	background-size:cover;
 }
 
 .login-form {
@@ -19,7 +34,7 @@ body {
 form[role=login] {
 	font: 16px/2.1em Lato, serif;
 	color: #e3e2e2;
-	background: #333;
+	background-image: #333;
 }	
 	form[role=login] h3 {
 		font-size: 24px;
@@ -30,7 +45,7 @@ form[role=login] {
 	}
 	form[role=login] input,
 	form[role=login] button {
-		font-size: 16px;
+		font-size: 25px;
 		margin: 5px 0;
 		border: none;
 	}
@@ -47,9 +62,12 @@ form[role=login] {
 		background: #ea044a;
 		margin-top: 20px;
 		width: 200px;
+		border-radius: 15px;
+		font-size: 25px;
 	}
 	form[role=login] button:hover {
-		background: #ee1759;		
+		background: #ee1759;
+		font-size: 25px;		
 	}
 	form[role=login] > section {
 		margin-bottom: 30px;
