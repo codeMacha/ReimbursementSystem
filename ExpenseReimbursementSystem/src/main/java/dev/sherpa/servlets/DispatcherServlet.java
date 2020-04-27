@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dev.sherpa.controller.ReimbursementController;
+import dev.sherpa.controller.EmployeeController;
 
 public class DispatcherServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -20,6 +21,7 @@ public class DispatcherServlet extends HttpServlet {
     }
 
     ReimbursementController rcontroller = new ReimbursementController();
+    EmployeeController econtroller = new EmployeeController();
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -35,6 +37,7 @@ public class DispatcherServlet extends HttpServlet {
 		case "/ExpenseReimbursementSystem/api/addreimbursement" : rcontroller.addReimbursement(request, response); break;
 		case "/ExpenseReimbursementSystem/api/submitteddreimbursements" : rcontroller.submittedReimbursements(request, response); break;
 		case "/ExpenseReimbursementSystem/api/update" : rcontroller.changeReimbursement(request, response);; break;
+		case "/ExpenseReimbursementSystem/api/employee" : econtroller.getEmployee(request, response); break;
 
 		
 		default : response.getWriter().append("your request uri did not match anything");break;

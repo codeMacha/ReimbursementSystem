@@ -2,26 +2,34 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="clean.css">
-<title>Insert title here</title>
+<link rel="icon" href="logo.png" type = "image/x-icon">
 </head>
 <body>
+<div class="stick">
+	<div class="topnav">
+	  <a class="active" href="#home">Home</a>
+	  <a href="#news">News</a>
+	  <a href="#contact">Contact</a>
+	  <a href="#about">About</a>
+	  <a href="Logout">Logout</a>
+	</div>
+</div>
 
 <h3>Reimbursements</h3>
-	<button id="allBtn">Get All Reimbursements</button>
-	<button id="submittedBtn">Get Pending Reimbursements</button>
-	<button id="approvedBtn">Get Approved Reimbursements</button>
-	<button id="rejectedBtn">Get Rejected Reimbursements</button>
+	<button id="allBtn" type="button" class="btn btn-warning">Get All Reimbursements</button>
+	<button id="submittedBtn" type="button" class="btn btn-primary">Get Pending Reimbursements</button>
+	<button id="approvedBtn" type="button" class="btn btn-success">Get Approved Reimbursements</button>
+	<button id="rejectedBtn" type="button" class="btn btn-danger">Get Rejected Reimbursements</button>
 	
 	
-	<table id="reimbursementTable" >
+	
+	<table id="reimbursementTable">
 	    <thead><tr><th>Description</th><th>Amount</th><th>Employee_id</th><th>Status</th></tr></thead>
 	</table>
-
-
-<form action="Logout">
-	<input type="submit" value="logout">
-</form>
 
 </body>
 <script>
@@ -31,70 +39,71 @@
 	document.getElementById("rejectedBtn").addEventListener("click",getRejectedReimbursements);
 
 	async function getAllReimbursements(){
-
+		
+		cleartable()
         let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementSystem/api/reimbursements");
         let reimbursements = await httpResponse.json();
         let tableData = document.getElementById("reimbursementTable");
-
+        
         for(reimbursement of reimbursements){
             tableData.innerHTML = tableData.innerHTML + `<tr> <td> ${reimbursement.description} </td>
             <td> ${reimbursement.amount} </td>  <td> ${reimbursement.requesterId} </td> <td> ${reimbursement.status}</td> </tr>`;
-            
         }    
     }
 	
 	async function getApprovedReimbursements(){
-
+		
+		cleartable()
         let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementSystem/api/reimbursements");
         let tasks = await httpResponse.json();
         let tableData = document.getElementById("reimbursementTable");
-
+      
         for(task of tasks){
         	if(task.status == "approved"){
 	            tableData.innerHTML = tableData.innerHTML + `<tr><td> ${task.description} </td>
 	            <td> ${task.amount} </td>  <td> ${task.requesterId} </td> <td> ${task.status}</td> </tr>`;
         	}    
-        }    
+        }  
     }
 	
 	async function getRejectedReimbursements(){
-
+		cleartable();
         let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementSystem/api/reimbursements");
         let tasks = await httpResponse.json();
         let tableData = document.getElementById("reimbursementTable");
-
+        
         for(task of tasks){
         	if(task.status == "rejected"){
 	            tableData.innerHTML = tableData.innerHTML + `<tr> <td> ${task.description} </td>
 	            <td> ${task.amount} </td>  <td> ${task.requesterId} </td> <td> ${task.status}</td> </tr>`;
         	}    
-        }    
+        }
     }
 	
 	async function getSubmittedReimbursements(){
-
+		cleartable()
         let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementSystem/api/reimbursements");
         let reimbursements = await httpResponse.json();
         let tableData = document.getElementById("reimbursementTable");
-
+        
         for(reimbursement of reimbursements){
         	if(reimbursement.status == "submitted"){
 				tableData.innerHTML = tableData.innerHTML + `<tr>
 				<td> ${reimbursement.description} </td> <td> ${reimbursement.amount} </td> <td> ${reimbursement.requesterId} </td> 
 				<td> ${reimbursement.status}</td>
-				<td><button rId=${reimbursement.rId}
+				<td><button type="button" class="btn btn-success" rId=${reimbursement.rId}
 				description=${reimbursement.description}
 				amount=${reimbursement.amount}
 				status=${reimbursement.status}
 				reqId=${reimbursement.requesterId} onclick="approve(this)"> Approve </button>
-				<button rid=${reimbursement.rId}
+				<button type="button" class="btn btn-danger" rid=${reimbursement.rId}
 				description=${reimbursement.description}
 				amount=${reimbursement.amount}
 				status=${reimbursement.status}
 				reqId=${reimbursement.requesterId} onclick="reject(this)"> Reject </button>
 				</td></tr>`;
         	}
-        }    
+        }
     }
 	
 	async function approve(element){
@@ -133,9 +142,20 @@
 	    let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementSystem/api/update", settings); 
 	
 	    console.log(httpResponse)
-	
 	}
+	
+    function cleartable(){
+        let rows = document.getElementById("reimbursementTable").rows.length - 1;
+        let counter = 1;
+        while(counter < rows)
+	    document.getElementById("reimbursementTable").deleteRow(counter);
+	    counter++;
+        
+    }
 
+	
+
+	
 </script>
 
 </html>

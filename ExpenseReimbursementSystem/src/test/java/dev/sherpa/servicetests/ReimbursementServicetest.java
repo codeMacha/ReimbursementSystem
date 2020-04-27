@@ -25,7 +25,7 @@ public class ReimbursementServicetest {
 	@Test
 	public void reject() {
 		Reimbursement r = rserv.getReimbursemnetById(1);
-		rserv.rejectReimbursement(r);
+		rserv.updateReimbursement(r);
 	}
 	
 	@Test
@@ -37,7 +37,7 @@ public class ReimbursementServicetest {
 	public void test() {
 		Reimbursement r = rserv.getReimbursemnetById(2);
 		System.out.println(r);
-		rserv.approveReimbursement(r);
+		rserv.updateReimbursement(r);
 	}
 
 }
