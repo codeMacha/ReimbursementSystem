@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="clean.css">
+<link rel="icon" href="logo.png" type = "image/x-icon">
+</head>
+<body>
+<div id="home" class="default" style="margin-bottom:360px">
+<div>
+	<img src="tenor.gif" alt="pic goes here" width="80px" height="80px">
+</div>
+
+	<h2 id="Name">Employee Name: </h2>
+<div class="stick">
+	<div class="topnav">
+	  <a class="active" href="#home">Home</a>
+	  <a href="#contact">Contact</a>
+	  <a href="Logout">Logout</a>
+	</div>
+</div>
+
+	
+	<h3></h3>
+	<form>
+		<input id="descInput" type="text" placeholder="Description">
+		<input id="amount" type="number" placeholder="0.00">
+		<button id="addReimbursementBtn">Add Reimbursement</button>
+	</form>
+	
+	<h3>Your Submitted Reimbursements</h3>
+	<button id="allBtn" style="margin:5px" type="button" class="btn ">Show All Reimbursements</button>
+	<button id="approvedBtn" style="margin:5px" >Show Approved Reimbursements</button>
+	<button id="rejectedBtn" style="margin:5px" >Show Rejected Reimbursements</button>
+	
+	
+	<table id="reimbursementTable">
+	    <thead><tr><th>Id</th><th>Description</th><th>Amount</th><th>Employee_id</th><th>Status</th></tr></thead>
+	</table>
+</div>
+	
+	<div id="contact" class="page">
+		<h1>Contact</h1>
+		<p>
+			Mailing Address:<br>Umbrella Corporation<br>545 S Birdneck
+			RD STE 202B<br>Virginia Beach, VA 23451
+		</p>
+		<p>
+			Office Phone:<br>757-227-4610
+		</p>
+		<p>
+			General Email:<br>
+			<a href="mailto:sales@ucwrg.com">sales@ucwrg.com</a>
+		</p>
+		<p>
+			Dealers email FFL to:<br>
+			<a href="mailto:ffl@ucwrg.com">ffl@ucwrg.com</a>
+		</p>
+		<p>
+			Hours of Communication:<br>10:00AM-10:00PM EST, M-F
+		</p>
+		<p>&nbsp;</p>
+		<p>NOTE: With our current volume of engineering and R&amp;D, email
+			is the absolute best method to reach us.&nbsp;Phone calls will be
+			returned as time permits but extended delays are not uncommon&nbsp;so
+			please limit your communication to email if at all possible. Thank
+			you!&nbsp;&nbsp;&nbsp;</p>
+		<p>
+			<!-- Begin MailChimp Signup Form -->
+			<br>
+			<br>
+			<label for="mce-EMAIL"></label>
+		</p>
+	</div>
+	
+
+</body>
+
+<script>
+	getEmployeeInfo()
+	document.getElementById("allBtn").addEventListener("click",getAllReimbursements,false);
+	document.getElementById("approvedBtn").addEventListener("click",getApprovedReimbursements,false);
+	document.getElementById("rejectedBtn").addEventListener("click",getRejectedReimbursements,false);
+	document.getElementById("addReimbursementBtn").addEventListener("click",addReimbursement);
+
+	async function getAllReimbursements(){
+		cleartable()
+        let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementSystem/api/emplreimbursements");
+        let tasks = await httpResponse.json();
+        let tableData = document.getElementById("reimbursementTable");
+
+        for(task of tasks){
+            tableData.innerHTML = tableData.innerHTML + `<tr><td> ${task.rId} </td> <td> ${task.description} </td>
+            <td> ${task.amount} </td>  <td> ${task.requesterId} </td> <td> ${task.status}</td> </tr>`;   
+        }   
+          
+    }
+	
+	async function getApprovedReimbursements(){
+		
+		cleartable()
+        let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementSystem/api/emplreimbursements");
+        let tasks = await httpResponse.json();
+        
+        let tableData = document.getElementById("reimbursementTable");
+
+        for(task of tasks){
+        	if(task.status == "approved"){
+	            tableData.innerHTML = tableData.innerHTML + `<tr><td> ${task.rId} </td> <td> ${task.description} </td>
+	            <td> ${task.amount} </td>  <td> ${task.requesterId} </td> <td> ${task.status}</td> </tr>`;
+        	}    
+        }
+    }
+	
+	async function getRejectedReimbursements(){
+		cleartable()
+        let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementSystem/api/emplreimbursements");
+        let tasks = await httpResponse.json();
+        let tableData = document.getElementById("reimbursementTable");
+
+        for(task of tasks){
+        	if(task.status == "rejected"){
+	            tableData.innerHTML = tableData.innerHTML + `<tr><td> ${task.rId} </td> <td> ${task.description} </td>
+	            <td> ${task.amount} </td>  <td> ${task.requesterId} </td> <td> ${task.status}</td> </tr>`;
+        	}
+        }    
+       
+    }
+
+	async function addReimbursement(){
+	    
+	    let reimbursement = {
+	        rId:0,
+	        status:"submitted"
+	    }
+	    // appending the properties to the object after it is created
+	    reimbursement.description = document.getElementById("descInput").value;
+	    reimbursement.amount = Number.parseInt(document.getElementById("amount").value);
+	
+	    let settings = {
+	        method:'POST',
+	        headers:{'Content-Type':'application/json'},
+	        body: JSON.stringify(reimbursement)
+	    }
+	
+	    let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementSystem/api/addreimbursement", settings); 
+	    console.log(httpResponse)
+	}
+	
+	async function getEmployeeInfo() {
+		let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementSystem/api/employee");
+        let info = await httpResponse.json();
+        let profile = document.getElementById("Name");
+        
+        profile.innerHTML = profile.innerHTML + ` ${info.name}`;
+        console.log(info);
+	}
+	
+	function cleartable(){
+        let rows = document.getElementById("reimbursementTable").rows.length - 1;
+        let counter = 1;
+        while(counter < rows)
+	        document.getElementById("reimbursementTable").deleteRow(counter);
+	        counter++;
+        
+    }
+	
+	
+
+
+</script>
+</html>

@@ -1,0 +1,142 @@
+@charset "ISO-8859-1";
+
+/* This hides all pages */
+.page {
+    display: none;
+}
+
+/* This displays the first page */
+.default {
+    display: block;
+}
+
+/* This displays the page corresponding to the one you clicked on */
+:target {
+    display: block;
+}
+
+/* This hides the default page when another page is clicked */
+:target ~ .default {
+    display: none;
+}
+
+body {
+	background-color: #333;
+	background-image: url('raccooncity.jpg');
+	background-size: cover;
+}
+
+h1  {
+	color: #a83b4099;
+	font-family: 'fantasy';
+	font-size: 65px;
+	text-transform: uppercase;
+	font-weight: normal;
+	line-height: 60px;
+	margin: 10px 0 20px;
+	text-transform: uppercase;
+	text-shadow: 2px 2px 0 #000;
+	margin: 10px 0 24px;
+	text-align: center;
+}
+
+h2 { 
+font-size: 30px; 
+letter-spacing: -1px; 
+color: #a83b4099;
+text-shadow: 1px 1px 0 #000;
+margin: 10px 0 24px; 
+text-align: center; 
+line-height: 50px;
+font-family: fantasy;
+}
+
+h3 {
+	color: coral;
+}
+
+h4 {
+	color: coral;
+}
+
+p { 
+color: #f6f6f6; 
+font-family: 'Orienta', sans-serif; 
+font-size: 16px; 
+line-height: 24px; 
+margin: 0 0 24px; 
+text-align: center; 
+}
+
+a { 
+color: #e8d4a7; 
+text-decoration: none; 
+text-align: right; 
+padding: 15px; 
+font-size: 20px; 
+}
+
+a:hover { 
+color: #da9650; 
+text-decoration: blink; 
+}
+
+div.stick {
+  position: fixed;
+  top: 0;
+  right: 0;
+  
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+  width: 100%
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+table {
+	color: coral;
+}
+
+#reimbursementTable {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#reimbursementTable td, #reimbursementTable th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#reimbursementTable tr:nth-child(even){background-color:firebrick;}
+
+#reimbursmentTable tr:hover {background-color: khaki ;}
+
+#reimbursementTable th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: rgb(230, 81, 85)ding-top;
+  color: burlywood;
+}
+

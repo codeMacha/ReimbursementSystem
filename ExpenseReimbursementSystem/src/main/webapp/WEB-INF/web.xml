@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<web-app>
+<servlet>
+	<servlet-name>EmployeeLogin</servlet-name>
+	<display-name>EmployeeLogin</display-name>
+	<description></description>
+	<servlet-class>dev.sherpa.servlets.EmployeeLogin</servlet-class>
+	</servlet>
+  <servlet>
+	<servlet-name>Logout</servlet-name>
+	<display-name>Logout</display-name>
+	<description></description>
+	<servlet-class>dev.sherpa.servlets.Logout</servlet-class>
+  </servlet>
+  <servlet>
+	<servlet-name>ManagerLogin</servlet-name>
+	<display-name>ManagerLogin</display-name>
+	<description></description>
+	<servlet-class>dev.sherpa.servlets.ManagerLogin</servlet-class>
+  </servlet>
+  <servlet>
+	<servlet-name>DispatcherServlet</servlet-name>
+	<display-name>DispatcherServlet</display-name>
+	<description></description>
+	<servlet-class>dev.sherpa.servlets.DispatcherServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	<servlet-name>EmployeeLogin</servlet-name>
+	<url-pattern>/EmployeeLogin</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+	<servlet-name>Logout</servlet-name>
+	<url-pattern>/Logout</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+	<servlet-name>ManagerLogin</servlet-name>
+	<url-pattern>/ManagerLogin</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+	<servlet-name>DispatcherServlet</servlet-name>
+	<url-pattern>/api/*</url-pattern>
+  </servlet-mapping></web-app>

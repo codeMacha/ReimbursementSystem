@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="clean.css">
+<link rel="icon" href="logo.png" type = "image/x-icon">
+</head>
+<body>
+<div id="home" class="default" style="margin-bottom:360px">
+<div class="stick">
+	<div class="topnav">
+	  <a class="active" href="#home">Home</a>
+	  <a href="#contact">Contact</a>
+	  <a href="Logout">Logout</a>
+	</div>
+</div>
+
+<h3>Reimbursements</h3>
+	<button id="allBtn" type="button" class="btn btn-warning">Get All Reimbursements</button>
+	<button id="submittedBtn" type="button" class="btn btn-primary">Get Pending Reimbursements</button>
+	<button id="approvedBtn" type="button" class="btn btn-success">Get Approved Reimbursements</button>
+	<button id="rejectedBtn" type="button" class="btn btn-danger">Get Rejected Reimbursements</button>
+	
+	
+	
+	<table id="reimbursementTable">
+	    <thead><tr><th>Description</th><th>Amount</th><th>Employee_id</th><th>Status</th></tr></thead>
+	</table>
+</div>
+
+	<div id="contact" class="page">
+		<h1>Contact</h1>
+		<p>
+			Mailing Address:<br>Umbrella Corporation<br>545 S Birdneck
+			RD STE 202B<br>Virginia Beach, VA 23451
+		</p>
+		<p>
+			Office Phone:<br>757-227-4610
+		</p>
+		<p>
+			General Email:<br>
+			<a href="mailto:sales@ucwrg.com">sales@ucwrg.com</a>
+		</p>
+		<p>
+			Dealers email FFL to:<br>
+			<a href="mailto:ffl@ucwrg.com">ffl@ucwrg.com</a>
+		</p>
+		<p>
+			Hours of Communication:<br>10:00AM-10:00PM EST, M-F
+		</p>
+		<p>&nbsp;</p>
+		<p>NOTE: With our current volume of engineering and R&amp;D, email
+			is the absolute best method to reach us.&nbsp;Phone calls will be
+			returned as time permits but extended delays are not uncommon&nbsp;so
+			please limit your communication to email if at all possible. Thank
+			you!&nbsp;&nbsp;&nbsp;</p>
+		<p>
+			<!-- Begin MailChimp Signup Form -->
+			<br>
+			<br>
+			<label for="mce-EMAIL"></label>
+		</p>
+	</div>
+
+
+</body>
+<script>
+	document.getElementById("allBtn").addEventListener("click",getAllReimbursements);
+	document.getElementById("submittedBtn").addEventListener("click",getSubmittedReimbursements);
+	document.getElementById("approvedBtn").addEventListener("click",getApprovedReimbursements);
+	document.getElementById("rejectedBtn").addEventListener("click",getRejectedReimbursements);
+
+	async function getAllReimbursements(){
+		
+		cleartable()
+        let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementSystem/api/reimbursements");
+        let reimbursements = await httpResponse.json();
+        let tableData = document.getElementById("reimbursementTable");
+        
+        for(reimbursement of reimbursements){
+            tableData.innerHTML = tableData.innerHTML + `<tr> <td> ${reimbursement.description} </td>
+            <td> ${reimbursement.amount} </td>  <td> ${reimbursement.requesterId} </td> <td> ${reimbursement.status}</td> </tr>`;
+        }    
+    }
+	
+	async function getApprovedReimbursements(){
+		
+		cleartable()
+        let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementSystem/api/reimbursements");
+        let tasks = await httpResponse.json();
+        let tableData = document.getElementById("reimbursementTable");
+      
+        for(task of tasks){
+        	if(task.status == "approved"){
+	            tableData.innerHTML = tableData.innerHTML + `<tr><td> ${task.description} </td>
+	            <td> ${task.amount} </td>  <td> ${task.requesterId} </td> <td> ${task.status}</td> </tr>`;
+        	}    
+        }  
+    }
+	
+	async function getRejectedReimbursements(){
+		cleartable();
+        let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementSystem/api/reimbursements");
+        let tasks = await httpResponse.json();
+        let tableData = document.getElementById("reimbursementTable");
+        
+        for(task of tasks){
+        	if(task.status == "rejected"){
+	            tableData.innerHTML = tableData.innerHTML + `<tr> <td> ${task.description} </td>
+	            <td> ${task.amount} </td>  <td> ${task.requesterId} </td> <td> ${task.status}</td> </tr>`;
+        	}    
+        }
+    }
+	
+	async function getSubmittedReimbursements(){
+		cleartable()
+        let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementSystem/api/reimbursements");
+        let reimbursements = await httpResponse.json();
+        let tableData = document.getElementById("reimbursementTable");
+        
+        for(reimbursement of reimbursements){
+        	if(reimbursement.status == "submitted"){
+				tableData.innerHTML = tableData.innerHTML + `<tr>
+				<td> ${reimbursement.description} </td> <td> ${reimbursement.amount} </td> <td> ${reimbursement.requesterId} </td> 
+				<td> ${reimbursement.status}</td>
+				<td><button type="button" class="btn btn-success" rId=${reimbursement.rId}
+				description=${reimbursement.description}
+				amount=${reimbursement.amount}
+				status=${reimbursement.status}
+				reqId=${reimbursement.requesterId} onclick="approve(this)"> Approve </button>
+				<button type="button" class="btn btn-danger" rid=${reimbursement.rId}
+				description=${reimbursement.description}
+				amount=${reimbursement.amount}
+				status=${reimbursement.status}
+				reqId=${reimbursement.requesterId} onclick="reject(this)"> Reject </button>
+				</td></tr>`;
+        	}
+        }
+    }
+	
+	async function approve(element){
+	    
+	    let reimbursement = {};
+	    reimbursement.rId = element.getAttribute("rId");
+	    reimbursement.description = element.getAttribute("description");
+	    reimbursement.status = "approved";
+		reimbursement.amount = Number.parseInt(element.getAttribute("amount"));
+		reimbursement.requesterId = element.getAttribute("reqId");
+	    let settings = {
+	        method:'POST',
+	        headers:{'Content-Type':'application/json'},
+	        body: JSON.stringify(reimbursement)
+	    }
+	
+	    let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementSystem/api/update", settings); 
+	    console.log(httpResponse)
+	}
+
+	async function reject(element){
+	    
+	    let reimbursement = {};
+	    reimbursement.rId = element.getAttribute("rId");
+	    reimbursement.description = element.getAttribute("description");
+	    reimbursement.status = "rejected";
+		reimbursement.amount = Number.parseInt(element.getAttribute("amount"));
+		reimbursement.requesterId = element.getAttribute("reqId");
+	    console.log(element)
+	    let settings = {
+	        method:'POST',
+	        headers:{'Content-Type':'application/json'},
+	        body: JSON.stringify(reimbursement)
+	    }
+	
+	    let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementSystem/api/update", settings); 
+	
+	    console.log(httpResponse)
+	}
+	
+    function cleartable(){
+        let rows = document.getElementById("reimbursementTable").rows.length - 1;
+        let counter = 1;
+        while(counter < rows)
+	    document.getElementById("reimbursementTable").deleteRow(counter);
+	    counter++;
+        
+    }
+
+	
+
+	
+</script>
+
+</html>
