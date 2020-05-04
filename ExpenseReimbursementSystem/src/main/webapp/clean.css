@@ -1,5 +1,25 @@
 @charset "ISO-8859-1";
 
+/* This hides all pages */
+.page {
+    display: none;
+}
+
+/* This displays the first page */
+.default {
+    display: block;
+}
+
+/* This displays the page corresponding to the one you clicked on */
+:target {
+    display: block;
+}
+
+/* This hides the default page when another page is clicked */
+:target ~ .default {
+    display: none;
+}
+
 body {
 	background-color: #333;
 	background-image: url('raccooncity.jpg');
